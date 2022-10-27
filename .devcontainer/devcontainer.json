@@ -1,8 +1,4 @@
 {
 	"name": "C# (.NET)",
-	"image": "mcr.microsoft.com/devcontainers/dotnet:0-6.0-bullseye",
-	"features": {
-		"ghcr.io/devcontainers/features/powershell:1": {}
-	},
-	"postCreateCommand": "dotnet build /workspaces/PlaywrightInACodeSpace && pwsh bin/Debug/net6.0/playwright.ps1 install-deps && pwsh bin/Debug/net6.0/playwright.ps1 install"
+	"image": "mcr.microsoft.com/playwright/dotnet:v1.27.0-focal"
 }
