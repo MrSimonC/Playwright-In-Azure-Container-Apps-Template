@@ -8,3 +8,4 @@ await page.ScreenshotAsync(new()
 {
     Path = "screenshot.png"
 });
+Console.WriteLine("All working.");
