@@ -17,6 +17,7 @@ Add `.devcontainer/devcontainer.json` containing:
 
 * VS Code Command: `Docker: Docker Add Files to Workspace`
   * Then update `final` to use `mcr.microsoft.com/playwright/dotnet:v1.27.0-focal`
+  * Comment out the `USER appuser` section (so that root is used, bypassing permission errors)
 * Test with VS Commands `Docker Build` and `Docker Run Interractive`
 * Then run `az container up`:
 
@@ -34,6 +35,7 @@ az containerapp up \
 
 <https://playwrightinacodespace.politeocean-cf0d7198.uksouth.azurecontainerapps.io/>
 
+* After the `devcontainer.json` experimentation, the rest of it look literally 1h30 on an evening to get working for the first time ever!
 
 ## Learnings
 
