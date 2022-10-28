@@ -17,6 +17,6 @@ async Task<string> RunPlaywrightAsync()
     {
         Path = "screenshot.png"
     });
-    Console.WriteLine("All working.");
-    return("All working");
+    Console.WriteLine("All working simon.");
+    return("All working simon.");
 }
