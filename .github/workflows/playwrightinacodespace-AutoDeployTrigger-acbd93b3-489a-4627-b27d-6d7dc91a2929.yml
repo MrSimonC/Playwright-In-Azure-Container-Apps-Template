@@ -1,0 +1,60 @@
+name: Trigger auto deployment for playwrightinacodespace
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/playwrightinacodespace-AutoDeployTrigger-acbd93b3-489a-4627-b27d-6d7dc91a2929.yml'
+
+  # Allow mannually trigger 
+  workflow_dispatch:      
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ca59eb1d2211acr.azurecr.io
+          username: ${{ secrets.PLAYWRIGHTINACODESPACE_REGISTRY_USERNAME }}
+          password: ${{ secrets.PLAYWRIGHTINACODESPACE_REGISTRY_PASSWORD }}
+
+      - name: Build and push container image to registry
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ca59eb1d2211acr.azurecr.io/playwrightinacodespace:${{ github.sha }}
+          file: ./Dockerfile
+          context: ./
+
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.PLAYWRIGHTINACODESPACE_AZURE_CREDENTIALS }}
+
+
+      - name: Deploy to containerapp
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az config set extension.use_dynamic_install=yes_without_prompt
+            az containerapp registry set -n playwrightinacodespace -g playwrightinacodespace --server ca59eb1d2211acr.azurecr.io --username  ${{ secrets.PLAYWRIGHTINACODESPACE_REGISTRY_USERNAME }} --password ${{ secrets.PLAYWRIGHTINACODESPACE_REGISTRY_PASSWORD }}
+            az containerapp update -n playwrightinacodespace -g playwrightinacodespace --image ca59eb1d2211acr.azurecr.io/playwrightinacodespace:${{ github.sha }}
