@@ -9,13 +9,8 @@
             "program": "${workspaceFolder}/bin/Debug/net6.0/PlaywrightDemo.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "stopAtEntry": false
-        },
-        {
-            "name": ".NET Core Attach",
-            "type": "coreclr",
-            "request": "attach"
+            "stopAtEntry": false,
+            "console": "internalConsole"
         },
         {
             "name": "Docker .NET Core Launch",
