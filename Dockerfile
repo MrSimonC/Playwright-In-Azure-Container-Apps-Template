@@ -24,6 +24,6 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 # Edge not included in mcr.microsoft.com/playwright/dotnet image.
-# Install (PLAYWRIGHT_BROWSERS_PATH is ignored) to /usr/bin/microsoft-edge-stable
+# Install to /usr/bin/microsoft-edge-stable (Note: PLAYWRIGHT_BROWSERS_PATH is ignored)
 RUN pwsh playwright.ps1 install msedge
 ENTRYPOINT ["dotnet", "PlaywrightDemo.dll"]
