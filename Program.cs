@@ -14,7 +14,6 @@ async Task<string> RunPlaywrightAsync()
     // Can be "msedge", "chrome-beta", "msedge-beta", "msedge-dev", etc.
     var browser = await chromium.LaunchAsync(new BrowserTypeLaunchOptions { 
         Channel = "msedge",
-        ExecutablePath = "/usr/bin/microsoft-edge",
         ChromiumSandbox = false 
     });
     var page = await browser.NewPageAsync();

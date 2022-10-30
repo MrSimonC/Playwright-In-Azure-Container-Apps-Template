@@ -23,4 +23,9 @@ RUN dotnet publish "PlaywrightDemo.csproj" -c Release -o /app/publish /p:UseAppH
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "PlaywrightDemo.dll"]
+# mcr.microsoft.com/playwright/dotnet doesn't include edge.
+# Install Edge, matching the same container install locations:
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright/
+RUN pwsh /app/publish/playwright.ps1 install msedge
+RUN ls /ms-playwright/
+# ENTRYPOINT ["dotnet", "PlaywrightDemo.dll"]
