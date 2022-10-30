@@ -23,9 +23,7 @@ RUN dotnet publish "PlaywrightDemo.csproj" -c Release -o /app/publish /p:UseAppH
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-# mcr.microsoft.com/playwright/dotnet doesn't include edge.
-# Install Edge, matching the same container install locations:
-ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright/
-RUN pwsh /app/publish/playwright.ps1 install msedge
-RUN ls /ms-playwright/
-# ENTRYPOINT ["dotnet", "PlaywrightDemo.dll"]
+# Edge not included in mcr.microsoft.com/playwright/dotnet image.
+# Install (PLAYWRIGHT_BROWSERS_PATH is ignored) to /usr/bin/microsoft-edge-stable
+RUN pwsh playwright.ps1 install msedge
+ENTRYPOINT ["dotnet", "PlaywrightDemo.dll"]
