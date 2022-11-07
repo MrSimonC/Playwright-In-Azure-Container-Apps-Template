@@ -1,0 +1,9 @@
+{
+	"name": "C# (.NET)",
+	"image": "mcr.microsoft.com/playwright/dotnet:v1.27.0-focal",
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:1": {},
+		"ghcr.io/devcontainers/features/azure-cli:1": {}
+	},
+	"postCreateCommand": "dotnet dev-certs https"
+}
